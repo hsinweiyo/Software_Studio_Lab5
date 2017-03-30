@@ -14,21 +14,26 @@ public class HeavyComputationSimulator implements Runnable {
     public HeavyComputationSimulator(JProgressBar bar,JLabel label)
     {
         //TODO:initial the thread and assign GUI variables
+        myThread = new Thread(this);
+        this.progressBar = bar;
+        this.label = label;
+        isExecuting = true;
 
     }
 
     public void startHeavyTask(){
         //TODO:start the thread here
-
+        myThread.start();
     }
     public void resumeHeavyTask()
     {
         //TODO
-
+        isExecuting = true;
     }
     public void pauseHeavyTask()
     {
         //TODO
+        isExecuting = false;
 
     }
 
@@ -43,6 +48,21 @@ public class HeavyComputationSimulator implements Runnable {
          * call pretendToBeBusy and update count value if task is executing
          * put Swing GUI modification inside SwingUtilities.invokeLater !!
          */
+
+        while(count < 100) {
+            pretendToBeBusy();
+            if(isExecuting()) {
+                System.out.println("count: " + count);
+                count++;
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setValue(count);
+                        label.setText(String.valueOf(count));
+                    }
+                });
+            }
+        }
 
     }
 

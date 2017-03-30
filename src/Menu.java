@@ -19,7 +19,9 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO: start the task
-
+                simulator.startHeavyTask();
+                System.out.println("start clicked");
+                startBtn.setEnabled(false);
             }
         });
         pauseBtn.addActionListener(new ActionListener() {
@@ -30,6 +32,26 @@ public class Menu {
                  * pause or resume the task
                  * you should use SwingUtilities.invokeLater() to modify GUI elements!
                  */
+
+                System.out.println("pause clicked");
+                if(simulator.isExecuting()) {
+                    simulator.pauseHeavyTask();
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            pauseBtn.setText("Resume");
+                        }
+                    });
+
+                } else {
+                    simulator.resumeHeavyTask();
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            pauseBtn.setText("Pause");
+                        }
+                    });
+                }
 
             }
         });
