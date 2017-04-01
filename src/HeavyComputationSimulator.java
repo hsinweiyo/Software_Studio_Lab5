@@ -52,8 +52,7 @@ public class HeavyComputationSimulator implements Runnable {
         while(count < 100) {
             pretendToBeBusy();
             if(isExecuting()) {
-                System.out.println("count: " + count);
-                count++;
+                System.out.println("count: " + count++);
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
